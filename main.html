@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Invitation 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: background 0.5s ease;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .error-description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .valentine-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .valentine-question {
+            font-size: 32px;
+            color: #667eea;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .button {
+            padding: 15px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .button:active {
+            transform: translateY(-1px);
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            transition: opacity 0.5s ease;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            position: relative;
+            transition: all 0.1s ease;
+        }
+
+        .agreement-message {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.8;
+            text-align: left;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .agreement-message h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .agreement-message ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .agreement-message li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .agreement-message li:before {
+            content: "💕";
+            position: absolute;
+            left: 0;
+        }
+
+        .agreement-message p {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #f5576c;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f5576c;
+            position: fixed;
+            animation: confetti-fall linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-message {
+                font-size: 24px;
+            }
+
+            .valentine-title {
+                font-size: 36px;
+            }
+
+            .valentine-question {
+                font-size: 24px;
+            }
+
+            .button {
+                padding: 12px 40px;
+                font-size: 16px;
+            }
+
+            .agreement-message {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 404 Error Screen -->
+        <div id="errorScreen" class="screen active">
+            <div class="error-code">404</div>
+            <div class="error-message">Page Not Found</div>
+            <div class="error-description">Oops! The page you're looking for doesn't exist.</div>
+            <button class="button refresh-btn" onclick="showValentineScreen()">Refresh</button>
+        </div>
+
+        <!-- Valentine's Invitation Screen -->
+        <div id="valentineScreen" class="screen">
+            <div class="valentine-title">💝</div>
+            <div class="valentine-question" id="valentineQuestion">Will you be my Valentine?</div>
+            <div class="button-container" id="buttonContainer">
+                <button class="button yes-btn" onclick="handleYes()">YES</button>
+                <button class="button no-btn" id="noBtn" onclick="handleNo()">NO</button>
+            </div>
+            <div id="agreementMessage" class="agreement-message" style="display: none;">
+                <h3>By clicking YES you agree to:</h3>
+                <ul>
+                    <li>Unlimited cuddles</li>
+                    <li>Lifetime supply of bad puns</li>
+                    <li>Mutual pizza stealing rights</li>
+                </ul>
+                <p>Effective immediately! 🚀</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        const gradients = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+            'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+            'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+        ];
+
+        function showValentineScreen() {
+            const errorScreen = document.getElementById('errorScreen');
+            const valentineScreen = document.getElementById('valentineScreen');
+            
+            errorScreen.classList.remove('active');
+            setTimeout(() => {
+                valentineScreen.classList.add('active');
+            }, 500);
+        }
+
+        function handleYes() {
+            const agreementMessage = document.getElementById('agreementMessage');
+            const buttonContainer = document.getElementById('buttonContainer');
+            
+            // Show agreement message
+            agreementMessage.style.display = 'block';
+            
+            // Hide buttons after 1 second
+            setTimeout(() => {
+                buttonContainer.classList.add('hidden');
+            }, 1000);
+            
+            // Create confetti
+            createConfetti();
+            
+            // Remove confetti after 5 seconds
+            setTimeout(() => {
+                const confettiElements = document.querySelectorAll('.confetti');
+                confettiElements.forEach(conf => conf.remove());
+            }, 5000);
+        }
+
+        function handleNo() {
+            const noBtn = document.getElementById('noBtn');
+            const valentineQuestion = document.getElementById('valentineQuestion');
+            noClickCount++;
+            
+            // Change emoji after 2 clicks
+            if (noClickCount === 2) {
+                valentineQuestion.innerHTML = valentineQuestion.innerHTML.replace('💔', '😭');
+            }
+            
+            // If emoji wasn't there yet, add it on first click
+            if (noClickCount === 1 && !valentineQuestion.innerHTML.includes('💔')) {
+                valentineQuestion.innerHTML = 'Will you be my Valentine? 💔';
+            }
+            
+            // Change background color
+            const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+            document.body.style.background = randomGradient;
+            
+            // Make button jump to random position
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            const maxX = containerRect.width - btnRect.width - 40;
+            const maxY = containerRect.height - btnRect.height - 40;
+            
+            const randomX = Math.random() * maxX - maxX / 2;
+            const randomY = Math.random() * maxY - maxY / 2;
+            
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        function createConfetti() {
+            const colors = ['#f5576c', '#f093fb', '#4facfe', '#43e97b', '#fee140', '#fa709a'];
+            const confettiCount = 100;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    // Random properties
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    
+                    // Random shapes
+                    if (Math.random() > 0.5) {
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    document.body.appendChild(confetti);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
